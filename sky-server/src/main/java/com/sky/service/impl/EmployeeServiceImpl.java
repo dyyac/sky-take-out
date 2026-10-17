@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
@@ -19,6 +20,9 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import com.github.pagehelper.Page;
+import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.result.PageResult;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -54,6 +58,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeMapper.insert(employee);
     };
+
+
+
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
         String password = employeeLoginDTO.getPassword();
@@ -82,5 +89,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
+    /**
+     *
+     * @param employeePageQueryDTO
+     */
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
+        //分页查询员工
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
 
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
+
+        //返回分页结果
+        return new PageResult(page.getTotal(),page.getResult());
+    }
 }
