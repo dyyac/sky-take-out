@@ -78,8 +78,8 @@ public class EmployeeController {
      */
     @PostMapping
     @ApiOperation("新增员工")
-    public Result save(@RequestBody EmployeeDTO employeeDTO){
-        log.info("新增员工:{}",employeeDTO);
+    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("新增员工:{}", employeeDTO);
         employeeService.save(employeeDTO);
         return Result.success();
     }
@@ -87,16 +87,31 @@ public class EmployeeController {
     @GetMapping("/page")
     @ApiOperation("分页查询员工")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
-        log.info("分页查询员工,参数为:{}",employeePageQueryDTO);
+        log.info("分页查询员工,参数为:{}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
 
     @PostMapping("/status/{status}")
     @ApiOperation("启用或者禁用员工账号")
-    public Result startOrStop(@PathVariable Integer status,Long id){
-        log.info("启用或者禁用员工账号,参数为:{},{}",status,id);
-        employeeService.startOrStop(status,id);
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用或者禁用员工账号,参数为:{},{}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("编辑员工信息:{}", employeeDTO);
+        employeeService.update(employeeDTO);
         return Result.success();
     }
 }
