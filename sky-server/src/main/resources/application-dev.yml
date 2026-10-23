@@ -16,3 +16,6 @@ sky:
     port: ${sky.redis.port}
     password: ${sky.redis.password}
     database: ${sky.redis.database}
+  wechat:
+    appid: ${WECHAT_APP_ID}
+    secret: ${WECHAT_APP_SECRET}
