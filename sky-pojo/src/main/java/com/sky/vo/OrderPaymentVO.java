@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderPaymentVO implements Serializable {
 
+    private boolean mockPayment; // true：开发环境模拟支付，前端不调用微信收银台
+
     private String nonceStr; //随机字符串
     private String paySign; //签名
     private String timeStamp; //时间戳
